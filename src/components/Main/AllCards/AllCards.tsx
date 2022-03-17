@@ -1,11 +1,11 @@
 import { Button, Card, CardContent, Typography, CardActions, Input } from '@mui/material';
 import React, { useState } from 'react';
-import { SearchUserType } from '../App';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import s from "./AllCards.module.css";
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { SearchUserType } from '../../Types/types';
 
 
 
@@ -15,7 +15,7 @@ type FormPropsType = {
 	setDeleteCard: (id: string) => void
 }
 
-const AllCards: React.FC<FormPropsType> = ({ workTimeData, setEditCard, setDeleteCard }) => {
+const AllCards: React.FC<FormPropsType> = React.memo(({ workTimeData, setEditCard, setDeleteCard }) => {
 	const [editMode, setEditMode] = useState(false)
 	const [idEditMode, setIdEditMode] = useState<string | null>(null)
 
@@ -72,6 +72,6 @@ const AllCards: React.FC<FormPropsType> = ({ workTimeData, setEditCard, setDelet
 			</Card>)}
 			</form>
 	</div>
-}
+})
 
 export default AllCards
