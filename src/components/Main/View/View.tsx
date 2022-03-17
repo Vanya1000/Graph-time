@@ -27,11 +27,11 @@ type ViewType = {
 
 
 
-const View: React.FC<ViewType> = React.memo(({ workTimeData }) => {
+const View: React.FC<ViewType> = ({ workTimeData }) => {
 
 	const [date, setDate] = useState<string[]>()
 	const [hour, setHour] = useState<number[]>()
-
+	
 	useEffect(() => {
 		if (workTimeData) {
 			let mapHours = workTimeData.map((item: SearchUserType) => { return Number(item.hour) })
@@ -70,8 +70,8 @@ const View: React.FC<ViewType> = React.memo(({ workTimeData }) => {
 	return <Bar
 		options={options}
 		data={data}
-		height={600}
+		height={document.documentElement.clientWidth > 768 ? 370 : 800}
 		width={800} />
-})
+}
 
 export default View;

@@ -41,8 +41,8 @@ const Form: React.FC<FormPropsType> = React.memo(({ setIsFetching, setWorkTimeDa
 	
 	return <div>
 		<form onSubmit={handleSubmit(onSubmit)}>
-			<Input  error={errors.date && true} color='primary' type='date' {...register("date", { required: true })} />
-			<Input sx={{ m: 2 }} error={errors.hour && true} type='time' {...register("hour", { required: true })} />
+			Date:<Input sx={{ m: 2 }} error={errors.date && true} color='primary' type='date' {...register("date", { required: true })} />
+			Hours:<Input sx={{ m: 2 }} error={errors.hour && true} type='time' {...register("hour", { required: true })} />
 			<Button sx={{ m: 4 }} variant="contained" type="submit" color={errors.hour || errors.date  ? 'error' : 'primary'}>
 				Send
 			</Button>
