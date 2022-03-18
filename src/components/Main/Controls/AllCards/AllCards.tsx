@@ -5,7 +5,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import s from "./AllCards.module.css";
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { SearchUserType } from '../../Types/types';
+import { SearchUserType } from '../../../Types/types';
 
 
 

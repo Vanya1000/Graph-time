@@ -1,14 +1,14 @@
 import { Autocomplete, Button, Input, TextField } from '@mui/material';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { dataTimesAPI } from '../api/dataTimes';
 import { Inputs, SearchUserType } from './Types/types';
-
 
 
 type FormPropsType = {
 	setIsFetching: (bolean: boolean) => void
-	setWorkTimeData: React.Dispatch<React.SetStateAction<SearchUserType[] | undefined>>
+	setWorkTimeData: (value: React.SetStateAction<SearchUserType[] | undefined>) => void
 }
 
 const Form: React.FC<FormPropsType> = React.memo(({ setIsFetching, setWorkTimeData }) => {
@@ -16,18 +16,16 @@ const Form: React.FC<FormPropsType> = React.memo(({ setIsFetching, setWorkTimeDa
 
 	useEffect(() => {
 		if (sendData) {
-			setIsFetching(true)
-			let revisedData = {
-				"date": sendData.date.replace(/-/gi, '.'),
-				"hour": sendData.hour.replace(/:/gi, '.')
-			}
-			axios
-				.post('https://serene-caverns-54014.herokuapp.com/api/hoursADay', revisedData)
-				.then(res => {
-					
-					setWorkTimeData((actual) => [...actual!, res.data])
+				(async function () {
+					setIsFetching(true)
+					let revisedData = {
+						"date": sendData.date.replace(/-/gi, '.'),
+						"hour": sendData.hour.replace(/:/gi, '.')
+					}
+					let data = await dataTimesAPI.saveNewItemDataTimes(revisedData);
+					setWorkTimeData((actual) => [...actual!, data])
 					setIsFetching(false)
-				})
+				}());
 		}
 	}, [sendData])
 

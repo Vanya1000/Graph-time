@@ -13,3 +13,8 @@ export type Inputs = {
 	date: string,
 	hour: string
 };
+
+export type newItemDataTimesTypes = {
+	date: string;
+	hour: string;
+}

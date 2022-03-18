@@ -1,14 +1,15 @@
 import { Switch } from "@mui/material";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { dataTimesAPI } from "../../../api/dataTimes";
 import Form from "../../Form";
 import { Inputs, SearchUserType } from "../../Types/types";
-import AllCards from "../AllCards/AllCards";
+import AllCards from "./AllCards/AllCards";
 
 type SelectAllCardsPropsType = {
 	setIsFetching: (bolean: boolean) => void
 	workTimeData: SearchUserType[] | undefined
-	setWorkTimeData: React.Dispatch<React.SetStateAction<SearchUserType[] | undefined>>
+	setWorkTimeData: (value: React.SetStateAction<SearchUserType[] | undefined>) => void
 }
 
 const SelectAllCards: React.FC<SelectAllCardsPropsType> = React.memo(({ workTimeData, setWorkTimeData, setIsFetching  }) => {
@@ -18,28 +19,24 @@ const SelectAllCards: React.FC<SelectAllCardsPropsType> = React.memo(({ workTime
 
 	useEffect(() => {
 		if (editCard) {
-			setIsFetching(true)
-			axios
-				.put('https://serene-caverns-54014.herokuapp.com/api/hoursADay', editCard)
-				.then(res => {
-					setWorkTimeData((actual) => actual!.map(p => p._id === editCard._id ? { ...p, ['date']: res.data.date, ['hour']: res.data.hour } : p))
-					setIsFetching(false)
-				})
+			(async function () {
+				setIsFetching(true)
+				let data = await dataTimesAPI.editItemDataTimes(editCard);
+				setWorkTimeData((actual) => actual!.map(p => p._id === editCard._id ? { ...p, ['date']: data.date, ['hour']: data.hour } : p))
+				setIsFetching(false)
+			}());
 		}
-
 	}, [editCard])
 
 	useEffect(() => {
 		if (deleteCard) {
-			setIsFetching(true)
-			axios
-				.delete(`https://serene-caverns-54014.herokuapp.com/api/hoursADay/${deleteCard}`)
-				.then(res => {
-					setWorkTimeData((actual) => actual!.filter(p => p._id !== deleteCard))
-					setIsFetching(false)
-				})
+			(async function () {
+				setIsFetching(true)
+				let data = await dataTimesAPI.deleteItemDataTimes(deleteCard);
+				setWorkTimeData((actual) => actual!.filter(p => p._id !== deleteCard))
+				setIsFetching(false)
+			}());
 		}
-
 	}, [deleteCard])
 
 	return <>
