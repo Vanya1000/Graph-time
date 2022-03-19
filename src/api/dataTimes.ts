@@ -1,4 +1,4 @@
-import { newItemDataTimesTypes, SearchUserType } from './../components/Types/types';
+import { newItemDataTimesTypes, SearchUserType } from '../types';
 import { instance } from "./api";
 
 

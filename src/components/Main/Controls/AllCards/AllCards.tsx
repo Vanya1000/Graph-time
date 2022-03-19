@@ -5,19 +5,29 @@ import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import s from "./AllCards.module.css";
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { SearchUserType } from '../../../Types/types';
+import { SearchUserType } from '../../../../types';
+import { deleteAndSetNewItemDataTimes, editAndSetNewItemDataTimes } from '../../../../redux/learningTime-reducer.ts';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppStateType } from '../../../../redux/redux-store';
 
 
 
 type FormPropsType = {
-	workTimeData: SearchUserType[] | undefined
-	setEditCard: (editData: SearchUserType) => void
-	setDeleteCard: (id: string) => void
 }
 
-const AllCards: React.FC<FormPropsType> = React.memo(({ workTimeData, setEditCard, setDeleteCard }) => {
+const AllCards: React.FC<FormPropsType> = React.memo(({}) => {
+
+	const workTimeData = useSelector((state: AppStateType) => state.lerningTime.dataTimes)
+
+	const dispatch = useDispatch()
+
 	const [editMode, setEditMode] = useState(false)
-	const [idEditMode, setIdEditMode] = useState<string | null>(null)
+	const [idEditMode, setIdEditMode] = useState<string>('')
+
+
+	const deleteCard = (id: string) => {
+		dispatch(deleteAndSetNewItemDataTimes(id))
+	}
 
 	const { register, setValue, handleSubmit, formState: { errors } } = useForm<SearchUserType>();
 	const onSubmit: SubmitHandler<SearchUserType> = data => {
@@ -28,10 +38,9 @@ const AllCards: React.FC<FormPropsType> = React.memo(({ workTimeData, setEditCar
 			"hour": data.hour.replace(/\:/gi, '.'),
 			"__v": 0
 		}
-		//@ts-ignore string _id  maybe not
-		setEditCard(editData);
+		dispatch(editAndSetNewItemDataTimes(editData))
 		setEditMode(false)
-		setIdEditMode(null)
+		setIdEditMode('')
 	}
 
 	return <div className={s.wrapper} >
@@ -66,7 +75,7 @@ const AllCards: React.FC<FormPropsType> = React.memo(({ workTimeData, setEditCar
 							setValue('date', u.date.replace(/\./gi, '-'))
 							setValue('hour', u.hour.replace(/\./gi, ':'))
 						}} startIcon={<EditIcon />} size="small" disabled={editMode && true}>Edit</Button>}
-						<Button onClick={() => { setDeleteCard(u._id)}} color="error" startIcon={<DeleteIcon />} size="small">Delite</Button>
+						<Button onClick={() => { deleteCard(u._id)}} color="error" startIcon={<DeleteIcon />} size="small">Delite</Button>
 					</CardActions>
 				</CardContent>
 			</Card>)}

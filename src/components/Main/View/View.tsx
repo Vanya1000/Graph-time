@@ -11,8 +11,9 @@ import {
 	Tooltip,
 } from 'chart.js';
 import { Bar } from "react-chartjs-2";
-import { SearchUserType } from "../../Types/types";
-import faker from "@faker-js/faker";
+import { SearchUserType } from "../../../types";
+import { useSelector } from "react-redux";
+import { AppStateType } from "../../../redux/redux-store";
 
 ChartJS.register(
 	LinearScale,
@@ -25,24 +26,19 @@ ChartJS.register(
 );
 
 type ViewType = {
-	workTimeData: SearchUserType[] | undefined
+	
 }
 
 
 
-const View: React.FC<ViewType> = React.memo(({ workTimeData }) => {
+const View: React.FC<ViewType> = React.memo(({}) => {
 
-	const [date, setDate] = useState<string[]>()
-	const [hour, setHour] = useState<number[]>()
+	const workTimeData = useSelector((state: AppStateType) => state.lerningTime.dataTimes)
 
-	useEffect(() => {
-		if (workTimeData) {
-			let mapHours = workTimeData.map((item: SearchUserType) => { return Number(item.hour) })
-			setHour(mapHours)
-			let mapDate = workTimeData.map((item: SearchUserType) => { return item.date })
-			setDate(mapDate)
-		}
-	}, [workTimeData])
+	let hour = workTimeData.map((item: SearchUserType) => { return Number(item.hour) })
+	let date = workTimeData.map((item: SearchUserType) => { return item.date })
+
+
 
 	const options = {
 		responsive: true,
