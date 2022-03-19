@@ -1,26 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Preloader from "../common/Preloader";
-import { SearchUserType } from "../../types";
 import Progress from "./Progress/Progress";
 import View from "./View/View";
 import Form from "./Form/Form";
 import SelectAllCards from "./Controls/SelectAllCards";
-import { dataTimesAPI } from "../../api/dataTimes";
+import { useSelector } from "react-redux";
+import { AppStateType } from "../../redux/redux-store";
 
 
 const Main = React.memo(() => {
-
-	const [isFetching, setIsFetching] = useState<boolean>(false)//! Заменить
-	const [workTimeData, setWorkTimeData] = useState<SearchUserType[]>()
-
-	useEffect(() => {
-		(async function () {
-			setIsFetching(true)
-			let data = await dataTimesAPI.getDataTimes();
-			setWorkTimeData(data)
-			setIsFetching(false)
-		}());
-	}, [])
+	
+	const isFetching = useSelector((state: AppStateType) => state.lerningTime.isFetching)
 
 	return <main>
 		<div className="_container">

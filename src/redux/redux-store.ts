@@ -1,4 +1,4 @@
-import { Action, applyMiddleware, combineReducers, createStore } from "redux";
+import { Action, applyMiddleware, combineReducers, createStore, compose } from "redux";
 import thunkMiddleware, { ThunkAction } from "redux-thunk";
 import appReducer from "./app-reducer";
 import learningTimeReducer from "./learningTime-reducer.ts";
@@ -21,8 +21,12 @@ export  type InferActionTypes<T> = T extends {[key: string]: (...arg: any[])=> i
 
 export type BaseThunkType<A extends Action, R = Promise<void>> = ThunkAction<R, AppStateType, unknown, A>// вынесли вверх
 
+declare global {
+	interface Window {
+		__REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+	}
+}
 
-// @ts-ignore
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 let store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
 
