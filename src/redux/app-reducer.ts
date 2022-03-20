@@ -1,8 +1,9 @@
 import { getworkTimeData } from "./learningTime-reducer.ts";
-import { InferActionTypes } from "./redux-store";
+import { BaseThunkType, InferActionTypes } from "./redux-store";
 
 let initialState = {
-	initialized: false
+	initialized: false,
+	darkTheme: false
 }
 
 export type InitialStateType = typeof initialState
@@ -14,24 +15,45 @@ const appReducer = (state = initialState, action: ActionsTypes): InitialStateTyp
 				...state,
 				initialized: true
 			}
+		case 'auth/CHANGE_THEME':
+			return {
+				...state,
+				darkTheme: action.payload
+			}
 		default:
 			return state;
 	}
 }
 
+
+
 type ActionsTypes = InferActionTypes<typeof actions>
 
 export const actions = {
-	initializedSuccess: () => ({ type: 'auth/INITIALIZED_SUCCES' } as const)
+	initializedSuccess: () => ({ type: 'auth/INITIALIZED_SUCCES' } as const),
+	setTheme: (payload: boolean) => ({ type: 'auth/CHANGE_THEME', payload } as const)
 }
+
+
+type ThunkType = BaseThunkType<ActionsTypes>
 
 export const initializeApp = () => {
 	return (dispatch: any) => {
+		if (localStorage.getItem('theme')) {
+			let theme = JSON.parse(localStorage.getItem("theme") || '{}')
+			dispatch(actions.setTheme(theme));
+		}
 		let promise = dispatch(getworkTimeData());
 		Promise.all([promise]).then(() => {// если несколько 
 			dispatch(actions.initializedSuccess());
 		});
 	}
 }
+
+export const setAndSaveThemeLocalStorage = (theme: boolean): ThunkType => async (dispatch) => {
+	dispatch(actions.setTheme(theme));
+	await localStorage.setItem('theme', JSON.stringify(theme));
+}
+
 
 export default appReducer;

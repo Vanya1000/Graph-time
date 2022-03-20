@@ -1,11 +1,12 @@
 import React, { useMemo, useState } from 'react';
+import HeaderBar from './HeaderBar';
 
 const Header = React.memo(() => {
-const [count, setCount] = useState(1)
 
 	return <header>
-		{count}
-		<button onClick={() => { setCount(count + 1)}}>click</button>
+		<div className="_container">
+			<HeaderBar/>
+			</div>
 	</header>
 })
 

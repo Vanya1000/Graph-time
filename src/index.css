@@ -10,11 +10,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-a,
-a:visited {
-	color: #ffffff;
-	text-decoration: none;
-}
+
 
 #root {
   height: 100%;
@@ -59,30 +55,16 @@ footer {
   gap: 10px;
 }
 
-.footer__link a {
-    display: inline-block;
-    color: #000000;
-    line-height: 1;
-    text-decoration: none;
-    cursor: pointer;
-}
-.footer__link a:after {
-    background-color: #000000;
-    display: block;
-    content: "";
-    height: 1px;
-    width: 0%;
-    -webkit-transition: width .3s ease-in-out;
-    -moz--transition: width .3s ease-in-out;
-    transition: width .3s ease-in-out;
-}
-.footer__link a:hover:after,
-.footer__link a:focus:after {
-    width: 100%;
-}
+
 
 .isFetching {
   position: sticky;
   top:39%;
   left: 50%;
+}
+
+.pagination {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
 }

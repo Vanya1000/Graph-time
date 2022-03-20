@@ -65,6 +65,7 @@ const View: React.FC<ViewType> = React.memo(({}) => {
 				label: 'Bar',
 				data: hour,
 				backgroundColor: '#66B2FF',
+				
 			},
 			{
 				type: 'line' as const,
