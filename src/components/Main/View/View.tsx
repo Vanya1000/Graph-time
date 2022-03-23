@@ -85,7 +85,8 @@ const View: React.FC<ViewType> = React.memo(({}) => {
 		data={data}
 		options={options}
 		height={document.documentElement.clientWidth > 768 ? 370 : 800}
-		width={800} />
+		width={800}
+		className="view" />
 })
 
 export default View;

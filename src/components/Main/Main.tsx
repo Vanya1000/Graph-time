@@ -6,6 +6,10 @@ import Form from "./Form/Form";
 import SelectAllCards from "./Controls/SelectAllCards";
 import { useSelector } from "react-redux";
 import { AppStateType } from "../../redux/redux-store";
+import SignIn from "../../Login/SignIn";
+
+
+
 
 
 const Main = React.memo(() => {
@@ -14,11 +18,14 @@ const Main = React.memo(() => {
 
 	return <main>
 		<div className="_container">
-			<Progress/>
-			{isFetching && <div className="isFetching"><Preloader /></div>}
-			<View />
-			<Form />
-			<SelectAllCards />
+			<SignIn/>
+			{/* <>
+				<Progress />
+				{isFetching && <div className="isFetching"><Preloader /></div>}
+				<View />
+				<Form />
+				<SelectAllCards />
+			</> */}
 		</div>
 	</main>
 

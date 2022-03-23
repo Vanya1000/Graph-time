@@ -35,6 +35,15 @@ height: 100%;
 	box-sizing: content-box;
 }
 
+@media (max-width: 900px) {
+  ._container {
+  padding: 0px;
+}
+.view {
+  padding: 0px 5px;
+}
+}
+
 header {
 }
 

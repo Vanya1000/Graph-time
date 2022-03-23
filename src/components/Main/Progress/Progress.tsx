@@ -22,7 +22,7 @@ const Progress: React.FC<ProgressPropsType> = React.memo(({ }) => {
 	})
 	
 
-	return <>
+	return <div className="view">
 		<Card >
 			<CardContent >
 				<Typography variant="subtitle1" >
@@ -33,7 +33,7 @@ const Progress: React.FC<ProgressPropsType> = React.memo(({ }) => {
 				</Typography>
 			</CardContent>
 		</Card>
-	</>
+	</div>
 })
 
 

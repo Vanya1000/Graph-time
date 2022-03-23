@@ -1,8 +1,9 @@
+import { getAuthUserData } from "./auth-reducer";
 import { getworkTimeData } from "./learningTime-reducer.ts";
 import { BaseThunkType, InferActionTypes } from "./redux-store";
 
 let initialState = {
-	initialized: false,
+	initialized: true,//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	darkTheme: false
 }
 
@@ -38,13 +39,14 @@ export const actions = {
 type ThunkType = BaseThunkType<ActionsTypes>
 
 export const initializeApp = () => {
-	return (dispatch: any) => {
+	return async (dispatch: any) => {
 		if (localStorage.getItem('theme')) {
 			let theme = JSON.parse(localStorage.getItem("theme") || '{}')
 			dispatch(actions.setTheme(theme));
 		}
+		let authMe = await dispatch(getAuthUserData()) //! Должен первым! ..если не авториз, то зачем дата!
 		let promise = dispatch(getworkTimeData());
-		Promise.all([promise]).then(() => {// если несколько 
+		Promise.all([authMe, promise]).then(() => {
 			dispatch(actions.initializedSuccess());
 		});
 	}

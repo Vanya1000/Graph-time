@@ -32,7 +32,7 @@ const learningTimeReducer = (state = initialState, action: ActionsTypes): Initia
 		case 'SET_DELETE_ITEM_DATA_TIMES':
 			return {
 				...state,
-				dataTimes: state.dataTimes.filter(p => p._id !== action.id)//! есть вопросы по immutable
+				dataTimes: state.dataTimes.filter(p => p._id !== action.id)
 			}
 		case 'TOGGLE_IS_FETCHING':
 			return {

@@ -1,12 +1,14 @@
 import { Action, applyMiddleware, combineReducers, createStore, compose } from "redux";
 import thunkMiddleware, { ThunkAction } from "redux-thunk";
 import appReducer from "./app-reducer";
+import authReducer from "./auth-reducer";
 import learningTimeReducer from "./learningTime-reducer.ts";
 
 
 let rootReducer = combineReducers({
 	lerningTime: learningTimeReducer,
-	app: appReducer
+	app: appReducer,
+	auth: authReducer
 
 });
 
