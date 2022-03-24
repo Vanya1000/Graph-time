@@ -12,87 +12,88 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/auth-reducer';
 import { SignInFormType } from '../types';
+import { AppStateType } from '../redux/redux-store';
+import { useNavigate } from 'react-router-dom';
+
 
 //! Обязательно обработку ошибок!!!
 
 
 const SignIn = () => {
-
 	const dispatch = useDispatch()
 
 	const { register, handleSubmit, reset, formState: { errors } } = useForm<SignInFormType>();
-	
+
 	const onSubmit: SubmitHandler<SignInFormType> = data => {
-		dispatch(login(data))		
+		dispatch(login(data))
 		reset();
-		}
+	}
 
-
-	return (
-		<Container component="main" maxWidth="xs">
-			<CssBaseline />
-			<Box
-				sx={{
-					marginTop: 8,
-					display: 'flex',
-					flexDirection: 'column',
-					alignItems: 'center',
-				}}
-			>
-				<Avatar sx={{ m: 1 }}>
-					<LockOutlinedIcon />
-				</Avatar>
-				<Typography component="h1" variant="h5">
-					Sign in
-				</Typography>
-				<Box >
-					<form onSubmit={handleSubmit(onSubmit)}>
-						<TextField
-							margin="normal"
-							required
-							fullWidth
-							id="Login"
-							label="Login"
-							autoComplete="email"
-							autoFocus
-						{...register("username", { required: true })}
-						/>
-						<TextField
-							margin="normal"
-							required
-							fullWidth
-							label="Password"
-							type="password"
-							id="password"
-							autoComplete="current-password"
-						{...register("password", { required: true })}
-						/>
-						<FormControlLabel
-							control={<Checkbox checked color="primary" {...register("rememberMe")} />}
-							label="Remember me"
-						/>
-						<Button
-							type="submit"
-							fullWidth
-							variant="contained"
-							sx={{ mt: 3, mb: 2 }}
-						>
-							Sign In
-						</Button>
-					</form>
-					<Grid container>
-						<Grid item xs>
-							<Link href="#" variant="body2">
-								{"Don't have an account? Sign Up"}
-							</Link>
+			return (
+			<Container component="main" maxWidth="xs">
+				<CssBaseline />
+				<Box
+					sx={{
+						marginTop: 8,
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+					}}
+				>
+					<Avatar sx={{ m: 1 }}>
+						<LockOutlinedIcon />
+					</Avatar>
+					<Typography component="h1" variant="h5">
+						Sign in
+					</Typography>
+					<Box >
+						<form onSubmit={handleSubmit(onSubmit)}>
+							<TextField
+								margin="normal"
+								required
+								fullWidth
+								id="Login"
+								label="Login"
+								autoComplete="email"
+								autoFocus
+								{...register("username", { required: true })}
+							/>
+							<TextField
+								margin="normal"
+								required
+								fullWidth
+								label="Password"
+								type="password"
+								id="password"
+								autoComplete="current-password"
+								{...register("password", { required: true })}
+							/>
+							<FormControlLabel
+								control={<Checkbox checked color="primary" {...register("rememberMe")} />}
+								label="Remember me"
+							/>
+							<Button
+								type="submit"
+								fullWidth
+								variant="contained"
+								sx={{ mt: 3, mb: 2 }}
+							>
+								Sign In
+							</Button>
+						</form>
+						<Grid container>
+							<Grid item xs>
+								<Link href="#" variant="body2">
+									{"Don't have an account? Sign Up"}
+								</Link>
+							</Grid>
 						</Grid>
-					</Grid>
+					</Box>
 				</Box>
-			</Box>
-		</Container>
-	);
+			</Container>
+			);
 }
-export default SignIn;
+			export default SignIn;

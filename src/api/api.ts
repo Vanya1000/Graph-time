@@ -1,18 +1,21 @@
 import axios from "axios";
 
 
-const getToken = () => {
-	if (localStorage.getItem('token')) {
-		return JSON.parse(localStorage.getItem("token") || '{}')
-	}
-}
-getToken()
+
 
 const local = 'http://localhost:5000'
 const global = 'https://serene-caverns-54014.herokuapp.com'
-export const instance = axios.create({
-	baseURL: local,
-	headers: {
-		'Authorization': `Bearer ${getToken()}`
-	}
+
+const instance = axios.create({
+	baseURL: local
 })
+
+
+instance.interceptors.request.use((config: any) => {
+	//@ts-ignore
+	config.headers.Authorization = `Bearer ${JSON.parse(localStorage.getItem("token"))}`
+	console.log(config);
+	return config
+})
+
+export default instance;

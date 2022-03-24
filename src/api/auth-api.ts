@@ -1,5 +1,5 @@
 import { SignInFormType, loginApiType, chechAuthType } from './../types';
-import { instance } from "./api";
+import instance from './api';
 
 
 

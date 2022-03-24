@@ -1,5 +1,5 @@
 import { newItemDataTimesTypes, SearchUserType } from '../types';
-import { instance } from "./api";
+import instance from './api';
 
 
 

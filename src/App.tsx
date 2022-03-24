@@ -12,6 +12,8 @@ import { createTheme, ThemeProvider, styled } from '@mui/material/styles';
 import CssBaseline from "@mui/material/CssBaseline";
 import { Switch } from '@mui/material';
 import SwitchTheme from './components/common/SwitchTheme';
+import { useNavigate } from 'react-router-dom';
+import { getworkTimeData } from './redux/learningTime-reducer.ts';
 
 
 const themeLight = createTheme({
@@ -33,9 +35,21 @@ const themeDark = createTheme({
 function App() {
   const initialized = useSelector((state: AppStateType) => state.app.initialized)
   const darkTheme = useSelector((state: AppStateType) => state.app.darkTheme)
-
-
+  const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
+  let redirect = useNavigate();
   const dispatch = useDispatch()
+
+  useEffect(() => {
+    !!isAuth ? redirect(`/my-app/`) : redirect(`/my-app/signin`) 
+  }, [isAuth])
+
+  useEffect(() => {
+    if (isAuth) {
+      dispatch(getworkTimeData()); // если я авторизовался, то получаю data
+    }
+  }, [isAuth])
+
+  
 
   useEffect(() => {
     dispatch(initializeApp());

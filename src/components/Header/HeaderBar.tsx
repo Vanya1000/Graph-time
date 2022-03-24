@@ -1,17 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import SwitchTheme from '../common/SwitchTheme';
+import { IconButton, Menu, MenuItem } from '@mui/material';
+import { AccountCircle } from '@mui/icons-material';
+import { flexbox } from '@mui/system';
+import { useSelector } from 'react-redux';
+import { AppStateType } from '../../redux/redux-store';
 
 
 
 const HeaderBar = () => {
+	const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
+	const userName = useSelector((state: AppStateType) => state.auth.user)
+
+	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+
+	const handleMenu = (event: React.MouseEvent<HTMLElement>) => {
+		setAnchorEl(event.currentTarget);
+	};
+
+	const handleClose = () => {
+		setAnchorEl(null);
+	};
 
 	return (
-		<AppBar position="static" sx={{mb: 4}}>
+		<AppBar position="static" sx={{ mb: 4 }}>
 			<Container maxWidth="xl">
 				<Toolbar disableGutters>
 					<Typography
@@ -35,6 +52,44 @@ const HeaderBar = () => {
 					<Box sx={{ flexGrow: 0 }}>
 						<SwitchTheme />
 					</Box>
+					{isAuth && (
+						<Box sx={{ display: {  md: 'flex', alignItems: 'center' } }}>
+							<Typography
+								variant="inherit"
+								sx={{ m: '0px 10px' }}>
+								{userName}
+							</Typography>
+							<Box >
+								<IconButton
+									size="large"
+									aria-label="account of current user"
+									aria-controls="menu-appbar"
+									aria-haspopup="true"
+									onClick={handleMenu}
+									color="inherit"
+								>
+									<AccountCircle />
+								</IconButton>
+								<Menu
+									id="menu-appbar"
+									anchorEl={anchorEl}
+									anchorOrigin={{
+										vertical: 'top',
+										horizontal: 'right',
+									}}
+									keepMounted
+									transformOrigin={{
+										vertical: 'top',
+										horizontal: 'right',
+									}}
+									open={Boolean(anchorEl)}
+									onClose={handleClose}
+								>
+									<MenuItem onClick={handleClose}>Logout</MenuItem>
+								</Menu>
+							</Box>
+						</Box>
+					)}
 				</Toolbar>
 			</Container>
 		</AppBar>
