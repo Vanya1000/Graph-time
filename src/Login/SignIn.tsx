@@ -5,7 +5,6 @@ import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
-import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
@@ -15,8 +14,10 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { login } from '../redux/auth-reducer';
 import { SignInFormType } from '../types';
+import { Link as RouterLink } from 'react-router-dom';
+import { Alert, Link, Stack } from '@mui/material'
 import { AppStateType } from '../redux/redux-store';
-import { useNavigate } from 'react-router-dom';
+
 
 
 //! Обязательно обработку ошибок!!!
@@ -24,6 +25,7 @@ import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
 	const dispatch = useDispatch()
+	const loginErrorMessage = useSelector((state: AppStateType) => state.auth.loginErrorMessage)
 
 	const { register, handleSubmit, reset, formState: { errors } } = useForm<SignInFormType>();
 
@@ -49,6 +51,10 @@ const SignIn = () => {
 					<Typography component="h1" variant="h5">
 						Sign in
 					</Typography>
+						{loginErrorMessage &&
+							<Stack sx={{ width: '100%' }} spacing={2}>
+								<Alert severity="error">{loginErrorMessage}</Alert>
+							</Stack>}
 					<Box >
 						<form onSubmit={handleSubmit(onSubmit)}>
 							<TextField
@@ -86,7 +92,7 @@ const SignIn = () => {
 						</form>
 						<Grid container>
 							<Grid item xs>
-								<Link href="#" variant="body2">
+									<Link component={RouterLink} to="/my-app/signup" variant="body2">
 									{"Don't have an account? Sign Up"}
 								</Link>
 							</Grid>

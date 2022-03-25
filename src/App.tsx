@@ -40,7 +40,7 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    !!isAuth ? redirect(`/my-app/`) : redirect(`/my-app/signin`) 
+    !!isAuth && redirect(`/my-app/`)
   }, [isAuth])
 
   useEffect(() => {

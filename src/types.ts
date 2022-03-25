@@ -26,7 +26,18 @@ export type SignInFormType = {
 	rememberMe: boolean;
 }
 
+export type SignUpFormType = {
+	username: string;
+	password: string;
+}
+
 export type loginApiType = {
+	token: string;
+	id: string;
+	user: string;
+}
+
+export type LoginResponseType = {
 	token: string;
 	id: string;
 	user: string;
@@ -35,4 +46,9 @@ export type loginApiType = {
 export type chechAuthType = {
 	id: string;
 	user: string;
+}
+
+export type RegistrationDataType = {
+	username: string;
+	password: string;
 }

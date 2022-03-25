@@ -1,5 +1,5 @@
-import { SignInFormType, loginApiType, chechAuthType } from './../types';
-import instance from './api';
+import { SignInFormType, chechAuthType, RegistrationDataType, LoginResponseType } from './../types';
+import instance, { ResponseType, ResultCodesEnum } from './api';
 
 
 
@@ -11,6 +11,9 @@ export const authAPI = {
 	},// достать из local storage и в head
 
 	login(loginData: SignInFormType) {
-		return instance.post<loginApiType>('auth/login', loginData).then(res => res.data)
+		return instance.post<ResponseType<LoginResponseType, ResultCodesEnum>>('auth/login', loginData).then(res => res.data)
+	},
+	registration(registrationData: RegistrationDataType ) {
+		return instance.post<ResponseType<{}, ResultCodesEnum>>('auth/registration', registrationData).then(res => res.data)
 	}
 }

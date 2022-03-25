@@ -7,13 +7,17 @@ import Container from '@mui/material/Container';
 import SwitchTheme from '../common/SwitchTheme';
 import { IconButton, Menu, MenuItem } from '@mui/material';
 import { AccountCircle } from '@mui/icons-material';
-import { flexbox } from '@mui/system';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/redux-store';
+import { logout } from '../../redux/auth-reducer';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const HeaderBar = () => {
+	const dispatch = useDispatch()
+	let redirect = useNavigate();
+
 	const isAuth = useSelector((state: AppStateType) => state.auth.isAuth)
 	const userName = useSelector((state: AppStateType) => state.auth.user)
 
@@ -25,6 +29,9 @@ const HeaderBar = () => {
 
 	const handleClose = () => {
 		setAnchorEl(null);
+		redirect(`/my-app/signin`)
+		dispatch(logout())
+		
 	};
 
 	return (

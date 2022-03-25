@@ -8,6 +8,7 @@ import { useSelector } from "react-redux";
 import { AppStateType } from "../../redux/redux-store";
 import SignIn from "../../Login/SignIn";
 import { Route, Routes } from "react-router-dom";
+import SignUp from "../../Login/SignUp";
 
 
 
@@ -31,6 +32,7 @@ const Main = () => {// из за мемо?
 					</>
 				}/>
 				<Route path="/my-app/signin" element={<SignIn />} />
+				<Route path="/my-app/signup" element={<SignUp />} />
 				<Route
 					path="*"
 					element={
