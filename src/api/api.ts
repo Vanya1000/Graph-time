@@ -7,7 +7,7 @@ const local = 'http://localhost:5000'
 const global = 'https://serene-caverns-54014.herokuapp.com'
 
 const instance = axios.create({
-	baseURL: local
+	baseURL: global
 })
 
 

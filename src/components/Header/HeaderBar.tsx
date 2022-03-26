@@ -11,10 +11,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/redux-store';
 import { logout } from '../../redux/auth-reducer';
 import { useNavigate } from 'react-router-dom';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 
 
-const HeaderBar = () => {
+const HeaderBar = React.memo(() => {
 	const dispatch = useDispatch()
 	let redirect = useNavigate();
 
@@ -29,9 +30,12 @@ const HeaderBar = () => {
 
 	const handleClose = () => {
 		setAnchorEl(null);
-		redirect(`/my-app/signin`)
-		dispatch(logout())
 		
+	};
+
+	const handleLogout = () => {
+		redirect(`/signin`)
+		dispatch(logout())
 	};
 
 	return (
@@ -60,7 +64,7 @@ const HeaderBar = () => {
 						<SwitchTheme />
 					</Box>
 					{isAuth && (
-						<Box sx={{ display: {  md: 'flex', alignItems: 'center' } }}>
+						<Box sx={{ display: {  xs: 'flex', alignItems: 'center' } }}>
 							<Typography
 								variant="inherit"
 								sx={{ m: '0px 10px' }}>
@@ -92,7 +96,7 @@ const HeaderBar = () => {
 									open={Boolean(anchorEl)}
 									onClose={handleClose}
 								>
-									<MenuItem onClick={handleClose}>Logout</MenuItem>
+									<MenuItem onClick={handleLogout}><LogoutIcon />Logout</MenuItem>
 								</Menu>
 							</Box>
 						</Box>
@@ -101,5 +105,5 @@ const HeaderBar = () => {
 			</Container>
 		</AppBar>
 	);
-};
+});
 export default HeaderBar;

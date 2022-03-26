@@ -18,7 +18,8 @@ import { getworkTimeData } from './redux/learningTime-reducer.ts';
 
 const themeLight = createTheme({
   palette: {
-    
+    background: {
+    }
   }
 });
 
@@ -40,7 +41,7 @@ function App() {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    !!isAuth && redirect(`/my-app/`)
+    !!isAuth && redirect(`/`)
   }, [isAuth])
 
   useEffect(() => {
@@ -53,6 +54,7 @@ function App() {
 
   useEffect(() => {
     dispatch(initializeApp());
+    !isAuth && redirect(`/signin`)    
   }, [])
 
   return (

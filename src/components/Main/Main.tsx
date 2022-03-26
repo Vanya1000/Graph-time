@@ -14,7 +14,7 @@ import SignUp from "../../Login/SignUp";
 
 
 
-const Main = () => {// из за мемо?
+const Main = React.memo(() => {// из за мемо?
 	
 	const isFetching = useSelector((state: AppStateType) => state.lerningTime.isFetching)
 
@@ -22,7 +22,7 @@ const Main = () => {// из за мемо?
 	return <main>
 		<div className="_container">
 			<Routes>
-				<Route path="/my-app/" element={
+				<Route path="/" element={
 					<>
 						<Progress />
 						{isFetching && <div className="isFetching"><Preloader /></div>}
@@ -31,8 +31,8 @@ const Main = () => {// из за мемо?
 						<SelectAllCards />
 					</>
 				}/>
-				<Route path="/my-app/signin" element={<SignIn />} />
-				<Route path="/my-app/signup" element={<SignUp />} />
+				<Route path="/signin" element={<SignIn />} />
+				<Route path="/signup" element={<SignUp />} />
 				<Route
 					path="*"
 					element={
@@ -45,6 +45,6 @@ const Main = () => {// из за мемо?
 		</div>
 	</main>
 
-}
+})
 
 export default Main;

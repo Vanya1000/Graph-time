@@ -29,6 +29,7 @@ export type SignInFormType = {
 export type SignUpFormType = {
 	username: string;
 	password: string;
+	confirmPassword: string;
 }
 
 export type loginApiType = {
