@@ -22,7 +22,7 @@ const SignUp = React.memo(() => {
 	const isSuccessRegistration = useSelector((state: AppStateType) => state.auth.isSuccessRegistration)
 	const regErrorMessage = useSelector((state: AppStateType) => state.auth.regErrorMessage)
 
-	const { register, handleSubmit, reset, watch, formState: { errors } } = useForm<SignUpFormType>({ mode: "onBlur" });
+	const { register, handleSubmit, reset, watch, formState: { errors } } = useForm<SignUpFormType>();
 
 	const password = useRef({});
 	password.current = watch("password", "");
@@ -33,11 +33,10 @@ const SignUp = React.memo(() => {
 	}
 
 	return (
-		<Container component="main" maxWidth="xs">
+		<Container maxWidth="xs">
 			<CssBaseline />
 			<Box
 				sx={{
-					marginTop: 8,
 					display: 'flex',
 					flexDirection: 'column',
 					alignItems: 'center',
@@ -49,10 +48,7 @@ const SignUp = React.memo(() => {
 				<Typography component="h1" variant="h5">
 					Sign up
 				</Typography>
-				{regErrorMessage && !isSuccessRegistration &&
-					<Stack sx={{ width: '100%' }} spacing={2}>
-						<Alert severity="error">{regErrorMessage}</Alert>
-					</Stack>}
+				{regErrorMessage && !isSuccessRegistration && <Stack sx={{ width: '100%' }} spacing={2}><Alert severity="error">{regErrorMessage}</Alert></Stack>}
 				{isSuccessRegistration &&
 					<>
 						<Stack sx={{ width: '100%' }} spacing={2}>
@@ -63,10 +59,10 @@ const SignUp = React.memo(() => {
 				{!isSuccessRegistration &&
 					<Box >
 						<form onSubmit={handleSubmit(onSubmit)}>
+							{errors?.username && <Alert sx={{ width: '100%' }} severity="error">{errors?.username?.message || "Error"}</Alert>}
 							<TextField
 								margin="normal"
 								fullWidth
-								id="Login"
 								label="Login"
 								autoFocus
 								error={errors.username && true}
@@ -77,16 +73,12 @@ const SignUp = React.memo(() => {
 									}
 								})}
 							/>
-							{errors?.username &&
-								<Stack sx={{ width: '100%' }} spacing={2}>
-									<Alert severity="error">{errors?.username?.message || "Error"}</Alert>
-								</Stack>}
+							{errors?.password && <Alert sx={{ width: '100%' }} severity="error">{errors?.password?.message || "Error"}</Alert>}
 							<TextField
 								margin="normal"
 								fullWidth
 								label="Password"
 								type="password"
-								id="password"
 								error={errors.password && true}
 								{...register("password", {
 									required: 'Field password is required', pattern: {
@@ -99,24 +91,17 @@ const SignUp = React.memo(() => {
 									}
 								})}
 							/>
-							{errors?.password &&
-								<Stack sx={{ width: '100%' }} spacing={2}>
-									<Alert severity="error">{errors?.password?.message || "Error"}</Alert>
-								</Stack>}
+							{errors?.confirmPassword && <Alert sx={{ width: '100%' }} severity="error">{errors?.confirmPassword?.message || "Error"}</Alert>}
 							<TextField
 								margin="normal"
 								fullWidth
 								label="Confirm password"
 								type="password"
-								id="confirmPassword"
 								error={errors.password && true}
 								//@ts-ignore
 								{...register("confirmPassword", { validate: value => value === password.current || "The passwords do not match" })}
 							/>
-							{errors?.confirmPassword &&
-								<Stack sx={{ width: '100%' }} spacing={2}>
-									<Alert severity="error">{errors?.confirmPassword?.message || "Error"}</Alert>
-								</Stack>}
+							
 							<Button
 								type="submit"
 								fullWidth

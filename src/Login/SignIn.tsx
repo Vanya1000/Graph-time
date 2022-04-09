@@ -25,11 +25,10 @@ const SignIn = React.memo(() => {
 	const dispatch = useDispatch()
 	const loginErrorMessage = useSelector((state: AppStateType) => state.auth.loginErrorMessage)
 
-	const { register, handleSubmit, reset, formState: { errors } } = useForm<SignInFormType>({ mode: "onBlur" });
+	const { register, handleSubmit, formState: { errors } } = useForm<SignInFormType>();
 
 	const onSubmit: SubmitHandler<SignInFormType> = data => {
 		dispatch(login(data))
-		reset();
 	}
 
 	return (
@@ -53,13 +52,15 @@ const SignIn = React.memo(() => {
 					<Stack sx={{ width: '100%' }} spacing={2}>
 						<Alert severity="error">{loginErrorMessage}</Alert>
 					</Stack>}
+				
+				
 				<Box >
 					<form onSubmit={handleSubmit(onSubmit)}>
+						{errors?.username && <Stack sx={{ width: '100%' }} spacing={2}><Alert severity="error">{errors?.username?.message || "Error"}</Alert></Stack>}
 						<TextField
 							error={errors.username && true}
 							margin="normal"
 							fullWidth
-							id="Login"
 							label="Login"
 							autoComplete="email"
 							autoFocus
@@ -70,17 +71,13 @@ const SignIn = React.memo(() => {
 								}
 							})}
 						/>
-						{errors?.username &&
-							<Stack sx={{ width: '100%' }} spacing={2}>
-								<Alert severity="error">{errors?.username?.message || "Error"}</Alert>
-							</Stack>}
+						{errors?.password && <Stack sx={{ width: '100%' }} spacing={2}><Alert severity="error">{errors?.password?.message || "Error"}</Alert></Stack>}
 						<TextField
 							error={errors.password && true}
 							margin="normal"
 							fullWidth
 							label="Password"
 							type="password"
-							id="password"
 							autoComplete="current-password"
 							{...register("password", {
 								required: 'Field password is required', pattern: {
@@ -89,10 +86,7 @@ const SignIn = React.memo(() => {
 								}
 							})}
 						/>
-						{errors?.password &&
-							<Stack sx={{ width: '100%' }} spacing={2}>
-								<Alert severity="error">{errors?.password?.message || "Error"}</Alert>
-							</Stack>}
+						
 						<FormControlLabel
 							control={<Checkbox checked color="primary" {...register("rememberMe")} />}
 							label="Remember me"

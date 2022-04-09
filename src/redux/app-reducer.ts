@@ -41,7 +41,7 @@ type ThunkType = BaseThunkType<ActionsTypes>
 export const initializeApp = () => {
 	return async (dispatch: any) => {
 		if (localStorage.getItem('theme')) {
-			let theme = JSON.parse(localStorage.getItem("theme") || '{}')
+			let theme = await JSON.parse(localStorage.getItem("theme") || '{}')
 			dispatch(actions.setTheme(theme));
 		}
 		let authMe = await dispatch(getAuthUserData())// Веруть auth false если токен умер!

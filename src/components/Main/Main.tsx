@@ -12,8 +12,6 @@ import SignUp from "../../Login/SignUp";
 
 
 
-
-
 const Main = React.memo(() => {// из за мемо?
 	
 	const isFetching = useSelector((state: AppStateType) => state.lerningTime.isFetching)

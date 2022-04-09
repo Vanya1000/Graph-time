@@ -62,6 +62,8 @@ export const getAuthUserData = (): ThunkType => async (dispatch: DispatchType) =
 		if (authData.user) {
 			let { id, user } = authData
 			dispatch(actions.setAuthUserData(id, user, true));
+		} else {
+			dispatch(actions.setAuthUserData(null, null, false));
 		}
 	}	
 }

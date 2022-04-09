@@ -6,12 +6,12 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import SwitchTheme from '../common/SwitchTheme';
 import { IconButton, Menu, MenuItem } from '@mui/material';
-import { AccountCircle } from '@mui/icons-material';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppStateType } from '../../redux/redux-store';
 import { logout } from '../../redux/auth-reducer';
 import { useNavigate } from 'react-router-dom';
 import LogoutIcon from '@mui/icons-material/Logout';
+import ManageAccountsIcon from '@mui/icons-material/ManageAccounts';
 
 
 
@@ -29,11 +29,13 @@ const HeaderBar = React.memo(() => {
 	};
 
 	const handleClose = () => {
+		console.log(anchorEl);
 		setAnchorEl(null);
 		
 	};
 
 	const handleLogout = () => {
+		setAnchorEl(null);
 		redirect(`/signin`)
 		dispatch(logout())
 	};
@@ -66,7 +68,7 @@ const HeaderBar = React.memo(() => {
 					{isAuth && (
 						<Box sx={{ display: {  xs: 'flex', alignItems: 'center' } }}>
 							<Typography
-								variant="inherit"
+								variant="h6"
 								sx={{ m: '0px 10px' }}>
 								{userName}
 							</Typography>
@@ -79,16 +81,16 @@ const HeaderBar = React.memo(() => {
 									onClick={handleMenu}
 									color="inherit"
 								>
-									<AccountCircle />
-								</IconButton>
+								<ManageAccountsIcon fontSize='large' />
+								</IconButton >
 								<Menu
+									keepMounted={false}
 									id="menu-appbar"
 									anchorEl={anchorEl}
 									anchorOrigin={{
 										vertical: 'top',
 										horizontal: 'right',
 									}}
-									keepMounted
 									transformOrigin={{
 										vertical: 'top',
 										horizontal: 'right',
